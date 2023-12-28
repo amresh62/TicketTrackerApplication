@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>New Ticket</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" />
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/admin/tickets">Ticket Tracker Application</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" th:href="@{/admin/tickets}">Tickets</a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/admin/tickets/newTicket}" class="nav-link">
+                            New Ticket
+                        </a>
+                    </li>
+                    <!-- Add more navigation items as needed -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <form action="/admin/tickets/newTicket" method="post" th:object="${tickets}">
+        <div class="container center-box" style="margin-top: 5%;">
+            <div class="card">
+                <div class="card-header">
+                    <div th:if="${condition}">
+                        <!-- Content to be rendered if the condition is true -->
+                        <h5 class="card-title text-center">Create Ticket</h5>
+                    </div>
+
+                    <div th:unless="${condition}">
+                        <!-- Content to be rendered if the condition is false -->
+                        <h5 class="card-title text-center">Edit Ticket</h5>
+                    </div>
+
+                </div>
+                <div class="card-body">
+                    <!-- Body Content Goes Here -->
+                    <p class="card-text">
+                        <input type="hidden" th:field="*{id}" />
+                    <div class="mb-3">
+                        <label for="ticketTitle" class="form-label">Title</label>
+                        <input type="text" name="title" id="title" class="form-control" placeholder="Enter Ticket Title"
+                            th:field="*{title}" />
+                        <label for="description" class="form-label">Short Description</label>
+                        <textarea class="form-control" id="description" name="description"
+                            placeholder="Enter Ticket Description" rows="4" th:field="*{description}"></textarea>
+
+                        <label for="ticketContent" class="form-label">Content</label>
+                        <textarea class="form-control" id="content" name="content" placeholder="Enter Content" rows="4"
+                            th:field="*{content}"></textarea>
+                    </div>
+
+                    </p>
+                </div>
+                <button class="btn btn-primary">Submit</button>
+                <div class="card-footer text-center">
+                    <!-- Footer Content Goes Here -->
+                    <small class="text-muted text-center">Copyright &copy; Great Learning All rights reserved </small>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+
+</html>

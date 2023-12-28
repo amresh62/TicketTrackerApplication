@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Ticket Tracker Application</title>
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" />
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/admin/tickets">Ticket Tracker Application</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="/admin/tickets">Tickets</a>
+          </li>
+          <li class="nav-item">
+            <a th:href="@{/admin/tickets/newTicket}" class="nav-link">
+              New Ticket
+            </a>
+          </li>
+          <!-- Add more navigation items as needed -->
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container mt-5">
+    <h1>List of Tickets</h1>
+    <form action="#" th:action="@{/admin/tickets/search}" method="get">
+      <div class="input-group mb-3">
+        <input name="query" id="query" type="text" class="form-control" placeholder="Search..." aria-label="Search"
+          aria-describedby="basic-addon2" />
+        <button type="submit" class="btn btn-info btn-sm ml-3 mr-1">
+          Search
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="container mt-5">
+    <table class="table table-bordered table-striped">
+      <thead class="bg-dark text-white">
+        <tr>
+          <th>#</th>
+          <th>Ticket Title</th>
+          <th>Ticket Short Description</th>
+          <th>Created on</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr th:each="tempticket,rowStat : ${tickets}">
+          <td th:text="${rowStat.index + 1}" />
+          <td th:text="${tempticket.Title}" />
+          <td th:text="${tempticket.description}"/>
+          <td th:text="${tempticket.CreatedOn}"/>
+          <td>
+          <div class="row">
+            <div class="col-md-2">
+              <!-- Add "update" button/link -->
+              <form action="#" th:action="@{/admin/tickets/edit}" method="get">
+                <input type="hidden" name="id" th:value="${tempticket.id}" />
+                <button type="submit" class="btn btn-primary btn-sm ml-3 mr-1">
+                  Edit
+                </button>
+              </form>
+            </div>
+            <div class="col-md-2">
+              <!-- Add "delete" button/link -->
+              <form action="#" th:action="@{/admin/tickets/delete}" method="POST">
+                <input type="hidden" name="id" th:value="${tempticket.id}" />
+                <button type="submit" class="btn btn-danger btn-sm"
+                  onclick="if (!(confirm('Are you sure you want to delete this book?'))) return false">
+                  Delete
+                </button>
+              </form>
+            </div>
+            <div class="col-md-2">
+              <form action="#" th:action="@{/admin/tickets/edit}" method="get">
+                <input type="hidden" name="id" th:value="${tempticket.id}" />
+                <button type="submit" class="btn btn-info btn-sm ml-3 mr-1">
+                  View
+                </button>
+              </form>
+            </div>
+          </div>
+          </td>
+        </tr>
+      </tbody>
+
+    </table>
+    <div class="text-center"><small class="text-muted text-center">Copyright &copy; Great Learning All rights reserved
+      </small></div>
+  </div>
+
+</body>
+
+</html>
